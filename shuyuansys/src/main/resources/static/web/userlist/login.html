@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>
+        用户登录
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="full-screen" content="true"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+    <meta HTTP-EQUIV="pragma" content="no-cache"/>
+    <meta HTTP-EQUIV="Cache-Control" content="no-store, must-revalidate"/>
+    <meta HTTP-EQUIV="expires" content="Wed, 26 Feb 1997 08:21:57 GMT"/>
+    <meta HTTP-EQUIV="expires" content="0"/>
+    <link href=/static/vue/css/vuecss.css rel=stylesheet>
+    <script src="/static/vue/js/vue.js"></script>
+    <script src="/static/element-ui/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/sel/js/codejs.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="./function.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css.css">
+
+    <style>
+
+
+        .el-form-item__label {
+            color: white;
+        }
+    </style>
+</head>
+<body style="background:url(/static/images/bg.jpg)  #E9ECD9 center">
+<div class="row clearfix hidden-sm hidden-xs column">
+    <div class="col-xs-12 col-sm-12 col-md-12 nav_center padding_0 zoomIn wow bounceInLeft">
+        <div class="col-md-2 column ">
+
+        </div>
+        <div class="zoomIn wow  animated bounceIn col-md-5 column">
+            <div class="logodd">
+                农产品溯源系统 用户端
+            </div>
+        </div>
+        <div class="col-md-4 column"></div>
+    </div>
+</div>
+<div class="nav clearfix hidden-sm hidden-xs ">
+    <div class="zoomIn wow animated">
+        <div class="navdiv">
+            <ul>
+                <li class="active"><a href="login.html" target="main">首页</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="visible-sm-block visible-xs-block">
+
+    <div class="navwap">
+        <ul>
+            <li> 农产品溯源系统用户端</li>
+        </ul>
+    </div>
+
+</div>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-4 column hidden-sm hidden-xs "></div>
+        <div class="col-md-8 column">
+            <div style="padding-top:60px;line-height:50px;font-size:28px;color:white;">
+                <br/>
+                用户登录
+                <br/>
+            </div>
+            <div id="app">
+                <div class="forminputbg  col-md-6 column">
+                    <el-form ref="mode_form" :rules="mode_rules" :model="mode_form" label-width="80px">
+                        <el-form-item label="用户名" prop="username">
+                            <el-input v-model="mode_form.username" placeholder="请输入用户名"></el-input>
+                        </el-form-item>
+
+                        <el-form-item label="密码" prop="password">
+                            <el-input v-model="mode_form.password" placeholder="请输入密码" show-password></el-input>
+                        </el-form-item>
+                        <br/>
+                        <div style="text-align:center;">
+                            <el-button type="primary" @click="login('mode_form')">登录</el-button>
+                            &nbsp;
+                            <el-link href="reg.html" type="primary">注册</el-link>
+                        </div>
+                    </el-form>
+                    <br/> <br/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var ubiao = "userlist";
+    var gob = getQueryString("gob");
+
+    var data = {
+        mode_form: {
+            username: '', password: '',
+        },
+        mode_rules: {
+            useranme: [
+                {required: true, message: '请输入用户名', trigger: 'blur'},
+                {min: 4, max: 25, message: '大于4位数', trigger: 'blur'}
+            ],
+            password: [
+                {required: true, message: '请输入密码', trigger: 'blur'},
+                {min: 4, max: 25, message: '大于4位数', trigger: 'blur'}
+            ],
+
+        },
+    }
+    var login = function (formName) {
+        var self = this;
+        this.$refs[formName].validate((valid) => {
+            if (valid) {
+                // var wcode=encodeURIComponent(self.modeexcode_form.memo);
+                var body = "1";
+                for (var key in this.mode_form) {
+                    if (key != "id") {
+                        body = body + "&" + key + "=" + this.mode_form[key];
+                    }
+                }
+                var url = "/" + ubiao + "/" + ubiao[0].toUpperCase() + ubiao.substr(1) + "Login";//apiurl
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+
+                    body: body
+                    ,
+                }).then(function (response) {
+                    return response.json()
+                }).then(function (json) {
+
+                    if (json.msg == "666666") {
+
+                        if (getQueryString("gob") > 0) {
+                            window.history.back();
+                        } else {
+                            location = "manage.html";
+                        }
+                    } else {
+                        self.$message({
+                            type: 'warning',
+                            message: '用户名或密码不正确,请重新输入!',
+                        })
+                    }
+
+                }).catch(function (ex) {
+                    console.log('error submit!!');
+                })
+                //-----------------------------
+
+            } else {
+                //   console.log('error submit!!');
+                return false;
+            }
+
+
+        });
+
+    }
+    //---------logo end----------
+
+    var vm = new Vue({
+        el: "#app",
+        data: data,
+
+        methods:
+            {
+                login: login,
+            },
+
+        created: function () {
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,339 @@
+<!doctype html>
+<html>
+<head>
+    <title> 文章  </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" /><meta name="full-screen" content="true" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="360-fullscreen" content="true" />
+    <meta HTTP-EQUIV="pragma" content="no-cache" />
+    <meta HTTP-EQUIV="Cache-Control" content="no-store, must-revalidate" />
+    <meta HTTP-EQUIV="expires" content="Wed, 26 Feb 1997 08:21:57 GMT" />
+    <meta HTTP-EQUIV="expires" content="0" />
+    <link href=/static/vue/css/vuecss.css rel=stylesheet>
+    <script src="/static/vue/js/vue.js"></script>
+    <script src="/static/element-ui/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/sel/js/codejs.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../../function.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../../css.css">
+
+</head>
+<body>
+<div id="app">
+
+    <div class="container">
+        <div class="row clearfix">
+
+            <!-- 搜索框开始 -->
+            <el-row>
+                <el-col :span="24">
+                    <div class="grid-content bg-purple-dark">
+                        &nbsp;  搜索:
+                        <el-select style="width:120px;"
+                                   v-model="searchField_selected"
+                                   @change="choose_searchField"
+                                   placeholder="请选择搜索的类别">
+                            <el-option  v-for="item in searchFieldListAll"
+                                        :value="item.value"
+                                        :key="item.value"
+                                        :label="item.title">
+                                {{item.title}}
+                            </el-option>
+
+                        </el-select>
+
+                        <el-input  style="width:180px;"
+                                   placeholder="请输入关键词"
+                                   v-model="search_key"
+                                   class="input-with-select"
+                                   style="width:200px;">
+                            <el-button slot="append" icon="el-icon-search" @click="handleSearch">
+                            </el-button> <!-- 搜索按钮 -->
+                        </el-input>
+
+                        <br/>
+
+                           
+   
+   
+   
+   
+
+
+                    </div>
+                </el-col>
+            </el-row>
+
+            <!-- 搜索框END -->
+
+            <div v-if=listshow>
+                <!--list begin -->
+             
+ 
+                
+                <!--list begin -->
+<template>
+  <div class="infinite-list-wrapper" style="overflow:auto">
+    <ul   class="list"    v-infinite-scroll="load"    infinite-scroll-disabled="disabled">
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <ul>
+                         <div   v-for="(item, index) in dataList" :key="index"  >
+ 
+           							   <div  style="width:95%;float:left;	">	
+                  <li style="line-height:30px;padding-left:28px;">
+                     <a href="javascript:void(0)" @click=show(index,item)>
+{{item.fenleiname}}
+</a>
+                     <br/>
+标题:  {{item.title}}  &nbsp;&nbsp;
+                 </li>
+    </div>		
+
+ 				
+                         </div>
+ 
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </ul>
+    <Br/>   <Br/>   <Br/>
+    <center>
+    <p v-if="loading">加载中...</p>
+    <p v-if="noMore">没有更多了</p>
+    </center>
+  </div>
+</template>
+<!--list end -->
+                
+                 
+
+         
+        </div></div>
+
+<br/><br/><br/><br/>
+</div>
+<script>
+    var ubiao="article";
+    var data={
+        dataList:[],
+
+        listshowti:true,
+        listshow:false,
+
+        sum_count:0,
+        list_page_now:0,//列表当前页数
+
+        searchField_selected:'',
+        searchFieldListAll:[
+            {
+  value:'fenleiname',
+  title:'分类', 
+ },
+
+{
+  value:'title',
+  title:'标题', 
+ },
+
+
+
+        ],
+        search_key:'',
+
+
+        userid:'',
+        userinfo:{},
+
+
+        
+
+article_find:{
+
+},
+
+//-------------
+
+
+//-------------
+
+
+    }
+    //列表---------------------------------------------------------
+
+    //得到模型列表listapi
+    var getDataList=function(page)
+    {
+        //先把本地对象缓存下来
+        var self = this;
+        //-----------------------------
+        self.dataList.splice(0, self.dataList.length);//清空数组
+        var url="/"+ubiao+"/query"+ubiao[0].toUpperCase()+ubiao.substr(1)+"All";  //apiurl
+        var ifso=0;
+        var filedarr = new Array();
+        var keyarr = new Array();
+        var hstrarr = new Array();
+
+
+        
+
+        if(self.search_key!='')
+        {
+            filedarr.push(self.searchField_selected); //需要search的字段1,2,3,4
+            keyarr.push(self.search_key);//需要search的关系词key1,key2,kye3,key4
+            hstrarr.push('like');//like 相似模糊查询 相当于 like '%key%' 另外还可以用 = ,<=,>=,<,>
+            ifso=1;//是否search
+        }
+
+        if(page<=1){page=1;}
+        $.ajax({
+            url: url,
+            data:{'orderby':'id desc','limit':'20','page':page,'filedarr[]':filedarr,'keyarr[]':keyarr,'hstrarr[]':hstrarr,ifso:ifso},
+            type: "POST",
+            dataType: "json",
+            success: function(json) {
+                if(json.entity.count>0){
+                    self.listshow=true;
+                    self.listshowti=false;
+                }
+                for(var i=0;i<json.enlist.length;i++)
+                {
+                    self.dataList.push(json.enlist[i]);
+                }
+                self.sum_count=json.entity.count;
+            }
+        });
+        //-----------------------------
+    }
+    //---------列表 end--------------------------------------------------------------------------------
+
+    //得到用户
+    var   getUserLoginInfo=function()
+    {
+        var self = this;
+        var url="/"+userinfobiao+"/"+userinfobiao[0].toUpperCase()+userinfobiao.substr(1)+"GetLogin";  //apiurl
+        $.ajax({
+            url: url,
+            data: null,
+            type: "Post",
+            dataType: "json",
+            success: function(json) {
+                if(json.msg=="666666")
+                {
+                    console.log(json);
+                    self.userid=json.enlist.id;
+                    self.userinfo=json.enlist;
+
+                     self.getDataList(1);
+
+                }
+                else{
+                   top.location="../../login.html?gob=1";
+                }
+            }
+        });
+    }
+
+    //---------信息 end--------------------------------------------------------------------------------
+    var choose_searchField=function()
+    {
+
+    }
+    var handleSearch=function()
+    {
+        //判断是否有选中需要搜索的字段，
+        if(this.searchField_selected=='' )
+        {
+            this.$message({
+                type: 'warning',
+                message: '请选择一个搜索的栏!',
+            })
+
+        }//判断是否有输入关键词，
+        else if(this.search_key=='' )
+        {
+            this.$message({
+                type: 'warning',
+                message: '请输入搜索关键词!',
+            })
+
+        }
+        else
+        {
+            this.getDataList(1);
+        }
+
+    }
+    var show=function( index,item)
+    {
+        location="show.html?id="+item.id;
+
+    }
+   
+
+    var vm = new Vue({
+        el: "#app",
+        data:data,
+        methods:
+        {
+
+            //当前用户
+            getUserLoginInfo:getUserLoginInfo,
+
+            show:show,
+
+            getDataList:getDataList,//显示列表
+            choose_searchField:choose_searchField,
+            handleSearch:handleSearch,
+
+            
+
+            handleSizeChange(val) {
+              //  console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange(val) {
+
+                this.list_page_now=val;
+                this.getDataList(val);
+            },
+
+
+            rowHeaderClass({ row, rowIndex}) {
+                //console.log(rowIndex); //表头行下标
+                return 'background:#DFF0D8;text-align:center;';
+            },
+
+
+
+        },
+
+
+        created()
+        {
+            this.getUserLoginInfo();
+
+            var doc = document.documentElement;
+            this.table_height = doc.scrollHeight-128;
+
+        }
+    });
+
+
+</script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,171 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;border:0 none;outline:0;}
+body{background:#fff;font-size:14px}
+table{border-collapse:collapse;border-spacing:0}
+fieldset,img{border:0 none}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal}
+ol,ul,li{list-style:none outside none}
+caption,th{text-align:left}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}
+a{text-decoration:none;font-size: 16px;color: #000;}
+a:hover{text-decoration:none;color: #999!important; }
+
+
+
+
+/*logo*/
+.logodiv{width: 947px;margin:0 auto;height:80px;line-height:80px; }
+.main{width:1192px;margin:0 auto;color:#000;background: #fff  }
+
+.logodd{float: left;width:340px; font-size:22px;line-height:120px;height:120px; }
+.logo img{}
+.logo p{float: left;margin-top: 5px;}
+.logo p img{width: 226px;}
+/*搜索*/
+
+.search{width:338px;
+    float:left;
+    margin-top:22px;
+    border:1px solid #ccc;
+}
+
+.searcht{height:34px;float:left;line-height:34px;padding-left:4px;
+    width:280px;float:left;
+    background: #ffffff;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.searchi{ width:40px;float:right;height:34px;float:right;line-height:34px; cursor:pointer;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.kdiv{width:300px;float:left;padding-left:80px;  height:80px;line-height:80px;}
+
+.kdiv li{width:80px;float:left;}
+.kdiv li a{color:#999;font-size:14px;}
+
+
+
+
+.listdiv ul{padding-left:10px;}
+.listdiv li{width:230px;float:left;margin-left:15px;height:230px; text-align: center;
+    border:1px solid #ddd;margin-top:10px;
+}
+.listdiv li img{width:120px;}
+.listdiv li:hover img{width:140px;}
+
+
+
+.breadcrumb{background: #eee;color:#000;}
+.breadcrumb a{color:#000;}
+
+/*footer*/
+.footer{width: 100%;padding: 10px 0;background: #2C323B;float: left;margin-top: 15px;bottom: 0;}
+.foot_box{width: 1000px;margin: auto;}
+.footer p {float:left;width:100%;text-align: center;color: #d8dde0;font-size: 12px;height: 28px;line-height: 28px;}
+.footer p a:hover{text-decoration:none;}
+.footer p span{height:30px;font-size:12px;color:#555;margin:0 auto;}
+.footer p a{font-size: 12px;color: #d8dde0;}
+
+
+h1 {
+
+    line-height: 40px;
+
+    font-size:24px;
+}
+
+
+
+/*栏目导航*/
+.nav{width:100%;float: left;margin-top:0px; background: #EB5E5E;height: 55px;line-height:55px;}
+.navwap{ position:fixed; top:0px;width:100%;float: left;margin-top:0px; z-index:999;background: #EB5E5E;height: 55px;line-height:55px;padding-left:3%;}
+.navwap ul li{color:#fff;font-size:18px;}
+.navdiv{width:950px;margin:0 auto;height: 55px;background: #EB5E5E;line-height:55px}
+.nav .on, .nav ul li:hover{background: #C8CB91;}
+.nav .on a,.nav ul li:hover a{color: #fff;}
+.nav ul{ margin: 0 auto;}
+.nav ul li{color:#fff;float: left;height: 55px;line-height: 55px;text-align: center;overflow:hidden;padding: 0px 18px;}
+.nav ul li a{font-size: 17px;color: #fff;}
+
+
+.nav .le{float:left;width:700px;}
+.nav .ri{width: 400px;float:left;border:0px solid #fff;}
+
+
+.header_nav {width: 100%; height: 75px; background: #FFF; border-bottom: 1px solid #FFF }
+
+.h10{width:100%;margin:0 auto;height:10px;float:left;background: none;}
+
+
+
+h1 {
+
+    line-height: 40px;
+
+    font-size:24px;
+}
+
+em{
+    padding-left:2px;
+    padding-right:2px;
+    width: 20px;
+    height: 21px;
+    border: 1px solid #359AF0;
+    border-radius: 2px;
+    line-height: 18px;
+    text-align: center;
+    color: #359AF0;
+    font-weight: 700;
+    font-size: 16px;
+    margin:5px 5px 0 5px;}
+
+
+.mdt{width:100%;}
+.mdt span{float:right;}
+
+.caption h3{font-size:16px;line-height:36px;}
+.caption p li a{font-size:14px;}
+
+
+.list-group{ background:#fff}
+.list-group-item{ background:#fff}
+
+
+
+
+.indexdiv{ margin:0 auto;padding-top:60px; }
+.indexli{width:32%;float:left;margin-right:1%;padding-left:1%;}
+.indexli a{color:#1d1e1f;}
+.caption ul{padding-left:50px;}
+.caption li{width:230px;float:left;margin-left:25px;height:230px; text-align: center;
+    border:1px solid #ddd;margin-top:10px;
+}
+.caption li img{width:120px;}
+
+.caption li:hover img{width:140px;}
+
+
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+
+
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+input[type="file"]{display:none;}

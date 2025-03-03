@@ -1,0 +1,9 @@
+1
+C:\Chrome\Application\chrome.exe
+C:\Local\Google\Chrome\Application\chromedriver.exe
+127.0.0.1
+3306
+root
+011206
+shuyuansys
+6

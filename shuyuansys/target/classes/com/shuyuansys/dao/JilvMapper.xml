@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shuyuansys.dao.JilvMapper">
+    <resultMap id="BaseResultMap" type="com.shuyuansys.po.Jilv">
+        <!--
+          WARNING - @mbggenerated
+            字段
+        -->
+
+         <result property="id" column="id" />
+ <result property="title" column="title" />
+ <result property="uptime" column="uptime" />
+ <result property="uid" column="uid" />
+ <result property="jie" column="jie" />
+ <result property="picurl" column="picurl" />
+
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+          WARNING - @mbggenerated
+
+        -->
+        id,title,uptime,uid,jie,picurl
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--vjilv
+          WARNING - @mbggenerated
+        查询，有视图就用视图
+        -->
+        select
+        *
+        from vjilv
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+         删除
+        -->
+        delete from jilv
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.shuyuansys.po.Jilv">
+        <!--
+            添加全字段
+        -->
+        insert into jilv (id,title,uptime,uid,jie,picurl)
+        values (#{id ,jdbcType=INTEGER},#{title ,jdbcType=VARCHAR},#{uptime ,jdbcType=VARCHAR},#{uid ,jdbcType=INTEGER},#{jie ,jdbcType=VARCHAR},#{picurl ,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.shuyuansys.po.Jilv">
+        <!--
+          WARNING - @mbggenerated
+             添加不为空的字段
+        -->
+        insert into jilv
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+             <if test="id != null">
+id,
+        </if>
+ <if test="title != null">
+title,
+        </if>
+ <if test="uptime != null">
+uptime,
+        </if>
+ <if test="uid != null">
+uid,
+        </if>
+ <if test="jie != null">
+jie,
+        </if>
+ <if test="picurl != null">
+picurl,
+        </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+             <if test="id != null">
+#{id ,jdbcType=INTEGER},
+ </if>
+ <if test="title != null">
+#{title ,jdbcType=VARCHAR},
+ </if>
+ <if test="uptime != null">
+#{uptime ,jdbcType=VARCHAR},
+ </if>
+ <if test="uid != null">
+#{uid ,jdbcType=INTEGER},
+ </if>
+ <if test="jie != null">
+#{jie ,jdbcType=VARCHAR},
+ </if>
+ <if test="picurl != null">
+#{picurl ,jdbcType=VARCHAR},
+ </if>
+
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.shuyuansys.po.Jilv">
+        <!--
+        修改不为空的字段
+        -->
+        update jilv
+        <set>
+             <if test="title != null">
+title = #{title ,jdbcType=VARCHAR},
+ </if>
+ <if test="uptime != null">
+uptime = #{uptime ,jdbcType=VARCHAR},
+ </if>
+ <if test="uid != null">
+uid = #{uid ,jdbcType=INTEGER},
+ </if>
+ <if test="jie != null">
+jie = #{jie ,jdbcType=VARCHAR},
+ </if>
+ <if test="picurl != null">
+picurl = #{picurl ,jdbcType=VARCHAR},
+ </if>
+
+
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.shuyuansys.po.Jilv">
+        <!--
+         修改全部字段
+        -->
+        update jilv
+        set
+
+      title = #{title ,jdbcType=VARCHAR},
+uptime = #{uptime ,jdbcType=VARCHAR},
+uid = #{uid ,jdbcType=INTEGER},
+jie = #{jie ,jdbcType=VARCHAR},
+picurl = #{picurl ,jdbcType=VARCHAR}
+
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="queryJilvInfoAll" parameterType="Map" resultType="com.shuyuansys.po.Jilv">
+        SELECT * from vjilv
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+        order by  ${orderby}
+    </select>
+
+
+    <select id="topJilvNumList"  parameterType="Map"  resultType="com.shuyuansys.po.Jilv">
+        SELECT * from vjilv
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+
+        order by  ${orderby}
+
+        <if test=" limit!=null and limit>0">
+            limit ${limit}
+        </if>
+
+    </select>
+
+
+
+
+
+
+
+    <select id="topJilvNumListInTable"  parameterType="Map"  resultType="com.shuyuansys.po.Jilv">
+        SELECT * from jilv
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+
+        order by  ${orderby}
+
+        <if test=" limit!=null and limit>0">
+            limit ${limit}
+        </if>
+
+    </select>
+
+
+
+
+</mapper>

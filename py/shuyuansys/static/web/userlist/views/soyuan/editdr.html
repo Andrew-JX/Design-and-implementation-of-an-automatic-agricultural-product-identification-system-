@@ -1,0 +1,424 @@
+<!doctype html>
+<html>
+<head>
+    <title> 溯源信息  </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" /><meta name="full-screen" content="true" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="360-fullscreen" content="true" />
+    <meta HTTP-EQUIV="pragma" content="no-cache" />
+    <meta HTTP-EQUIV="Cache-Control" content="no-store, must-revalidate" />
+    <meta HTTP-EQUIV="expires" content="Wed, 26 Feb 1997 08:21:57 GMT" />
+    <meta HTTP-EQUIV="expires" content="0" />
+    <link href=/static/vue/css/vuecss.css rel=stylesheet>
+    <script src="/static/vue/js/vue.js"></script>
+    <script src="/static/element-ui/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/sel/js/codejs.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../../function.js"></script>
+
+       <link rel="stylesheet" type="text/css" href="../../../css.css">
+</head>
+<body>
+<div id="app">
+
+    <!--show begin -->
+    <div style="padding:8px;">
+        <div style="padding:8px;">
+            <div style="padding-left:0px;font-size:18px;font-weight:bold;line-height:38px;padding-top:8px;">
+                <span style="float:right;">  <el-button round  @click="goblack()">返回</el-button>&nbsp;&nbsp;</span>
+
+                <br/>
+            </div>
+        </div>
+
+
+        <div class="forminputbg  col-md-6 column"  >
+            <el-form  ref="edit_form" :rules="edit_rules" :model="edit_form" label-width="100px" >
+
+                <el-form-item label="农产品" prop="nong">
+<el-input v-model="edit_form.nong"></el-input> 
+  </el-form-item>
+
+<el-form-item label="产品图片" prop="picurl">
+ <img :src="'/upload/'+edit_form.picurl" style="width:130px;"><br/>
+<el-upload
+  action="/doUploadjson"
+  list-type="picture-card"
+  :on-preview="picurl_handlePictureCardPreview"
+  :on-remove="picurl_handleRemove"
+  :on-success="picurl_uploadsuccess">
+ <i class="el-icon-plus"></i>
+</el-upload>
+<el-dialog :visible.sync="picurl_dialogVisible">
+<img width="100%" :src="picurl_dialogImageUrl" alt="">
+</el-dialog>  <br/><br/>
+  </el-form-item>
+
+<el-form-item label="播种" prop="bo">
+<el-input  type="textarea"   :rows="12"  placeholder="请输入内容"  v-model="edit_form.bo"></el-input> 
+
+  </el-form-item>
+
+<el-form-item label="上市时间" prop="chetime">
+<el-input v-model="edit_form.chetime"></el-input> 
+  </el-form-item>
+
+<el-form-item label="施肥" prop="shi">
+<el-input  type="textarea"   :rows="12"  placeholder="请输入内容"  v-model="edit_form.shi"></el-input> 
+
+  </el-form-item>
+
+<el-form-item label="生长" prop="sheng">
+<el-input  type="textarea"   :rows="12"  placeholder="请输入内容"  v-model="edit_form.sheng"></el-input> 
+
+  </el-form-item>
+
+<el-form-item label="收购" prop="shou">
+<el-input  type="textarea"   :rows="12"  placeholder="请输入内容"  v-model="edit_form.shou"></el-input> 
+
+  </el-form-item>
+
+<el-form-item label="运输" prop="yun">
+<el-input  type="textarea"   :rows="12"  placeholder="请输入内容"  v-model="edit_form.yun"></el-input> 
+
+  </el-form-item>
+
+<el-form-item label="码" prop="er">
+ <img :src="'/upload/'+edit_form.er" style="width:130px;"><br/>
+<el-upload
+  action="/doUploadjson"
+  list-type="picture-card"
+  :on-preview="er_handlePictureCardPreview"
+  :on-remove="er_handleRemove"
+  :on-success="er_uploadsuccess">
+ <i class="el-icon-plus"></i>
+</el-upload>
+<el-dialog :visible.sync="er_dialogVisible">
+<img width="100%" :src="er_dialogImageUrl" alt="">
+</el-dialog>  <br/><br/>
+  </el-form-item>
+
+<el-form-item label="上传时间" prop="uptime">
+<el-input v-model="edit_form.uptime"></el-input> 
+  </el-form-item>
+
+
+
+                <el-form-item>
+                    <el-button type="primary"    @click="goEdit('edit_form')">提交</el-button>
+                </el-form-item>
+            </el-form>
+            <br/>	 <br/>
+
+        </div>
+        <!--show end -->
+
+    </div>
+</div>
+
+
+<script>
+    var ubiao="soyuan";
+
+    var data={
+    edit_form:
+    {
+        id: '',  //编号  
+nong: '',  //农产品  
+picurl: '',  //产品图片  
+bo: '',  //播种  
+chetime: '',  //上市时间  
+shi: '',  //施肥  
+sheng: '',  //生长  
+shou: '',  //收购  
+yun: '',  //运输  
+er: '',  //码  
+uptime: '',  //上传时间  
+
+
+
+    },
+    id:0,
+
+        edit_rules: {
+        nong:[
+{ required: true, message: '请输入农产品', trigger: 'blur' },
+ ],
+
+bo:[
+{ required: true, message: '请输入播种', trigger: 'blur' },
+ ],
+
+chetime:[
+{ required: true, message: '请输入上市时间', trigger: 'blur' },
+ ],
+
+shi:[
+{ required: true, message: '请输入施肥', trigger: 'blur' },
+ ],
+
+sheng:[
+{ required: true, message: '请输入生长', trigger: 'blur' },
+ ],
+
+shou:[
+{ required: true, message: '请输入收购', trigger: 'blur' },
+ ],
+
+yun:[
+{ required: true, message: '请输入运输', trigger: 'blur' },
+ ],
+
+uptime:[
+{ required: true, message: '请输入上传时间', trigger: 'blur' },
+ ],
+
+
+
+    },
+
+      
+
+picurl_dialogVisible:false,
+picurl_dialogImageUrl:'',
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+er_dialogVisible:false,
+er_dialogImageUrl:'',
+  
+
+  
+
+
+
+    }
+
+    //得到详细信息---------------------------------------------------------
+    var   getInfo=function()
+    {
+
+        this.id=getQueryString("id");
+        //先把本地对象缓存下来
+        var self = this;
+        //-----------------------------
+        var url="/"+ubiao+"/query"+ubiao[0].toUpperCase()+ubiao.substr(1)+"ById";  //apiurl
+        $.ajax({
+            url: url,
+            data: "id="+this.id,
+            type: "POST",
+            dataType: "json",
+            success: function(json) {
+                if(json.msg=="666666")
+                {
+                    self.edit_form=json.enlist[0];
+                      
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+                }
+                else{
+                    location="list.html";
+                }
+            }
+        });
+        //-----------------------------
+    }
+    //---------得到详细信息 end--------------------------------------------------------------------------------
+
+    //------------修改提交------------------------------------------------------------------------------------
+    var  goEdit=function(formName)
+    {
+        var self = this;
+        this.$refs[formName].validate((valid) =>
+        {
+            if (valid) {
+
+                // var wcode=encodeURIComponent(self.modeexcode_form.memo);
+                var body="1";
+                for(var key in this.edit_form){
+                    body = body + "&" + key + "=" + zma(this.edit_form[key]);
+                }
+              var url="/"+ubiao+"/update"+ubiao[0].toUpperCase()+ubiao.substr(1)+"Submit";  //apiurl
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: body
+                    ,
+                }) .then(function(response) {
+                    return response.json()
+                }).then(function(json) {
+                    if(json.msg=="666666")
+                    {
+                        self.$message({
+                            type: 'success',
+                            message: '成功!',
+                        });
+                        setTimeout(function(){location="list.html";},2000);
+                    }
+                    else
+                    {
+                        self.$message({
+                            type: 'warning',
+                            message: '错误!',
+                        });
+
+                    }
+
+                }).catch(function(ex) {  console.log('error submit!!');   })
+                //-----------------------------
+
+            }
+            else
+            {
+                //   console.log('error submit!!');
+                return false;
+            }
+         });
+
+    }
+
+
+
+
+
+    //--------- edit end----------
+
+
+
+              
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+    var goblack=function()
+    {
+        window.history.back();
+    }
+
+    //跳转添加
+    var upadd=function()
+    {
+        location="add.html";
+
+    }
+
+    var vm = new Vue({
+        el: "#app",
+        data:data,
+        methods:
+        {
+
+            getInfo:getInfo,
+            goEdit:goEdit,
+            goblack:goblack,
+            upadd:upadd,
+              
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+             picurl_handleRemove(file) { 
+console.log(file);  
+},  
+picurl_handlePictureCardPreview(file) { 
+ this.picurl_dialogImageUrl = file.url; 
+ this.edit_form.picurl= file.url; 
+ this.picurl_dialogVisible = true; 
+},  
+picurl_handleDownload(file) {  
+ console.log(file); 
+ }, 
+
+picurl_uploadsuccess(response,file,fileList) {  
+  this.edit_form.picurl= response.enlist[0]; 
+ }, 
+
+er_handleRemove(file) { 
+console.log(file);  
+},  
+er_handlePictureCardPreview(file) { 
+ this.er_dialogImageUrl = file.url; 
+ this.edit_form.er= file.url; 
+ this.er_dialogVisible = true; 
+},  
+er_handleDownload(file) {  
+ console.log(file); 
+ }, 
+
+er_uploadsuccess(response,file,fileList) {  
+  this.edit_form.er= response.enlist[0]; 
+ }, 
+
+
+
+        },
+    created: function ()
+    {
+        this.getInfo();
+    }
+
+    });
+
+
+</script>
+
+
+
+</body>
+</html>
+

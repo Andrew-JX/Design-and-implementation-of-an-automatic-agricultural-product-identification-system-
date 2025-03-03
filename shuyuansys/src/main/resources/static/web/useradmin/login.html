@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+<head><title>
+    登录
+</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+    <meta content="telephone=no" name="format-detection"/>
+    <meta name="full-screen" content="true"/>
+    <meta name="screen-orientation" content="portrait"/>
+    <meta name="x5-fullscreen" content="true"/>
+    <meta name="360-fullscreen" content="true"/>
+    <meta HTTP-EQUIV="pragma" content="no-cache"/>
+    <meta HTTP-EQUIV="Cache-Control" content="no-store, must-revalidate"/>
+    <meta HTTP-EQUIV="expires" content="Wed, 26 Feb 1997 08:21:57 GMT"/>
+    <meta HTTP-EQUIV="expires" content="0"/>
+    <link rel="stylesheet" type="text/css" href="/static/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-image: url("/static/images/manage/bg.jpg");
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+
+<div class="container" style="margin-top:10%;">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div class="row clearfix">
+                <div class="col-md-4 column">
+                </div>
+                <div class="col-md-4 column">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title" style="font-size:18px;text-align:center;line-height:40px;">
+                                农产品溯源系统 登录
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+
+                            <div class="container" style="width:100%;text-align:center;">
+                                <input type="text" name="username" id="username" class="form-control" placeholder="用户名"
+                                       onclick="cleart('tishi')" style="width:260px;line-height:30px;height:30px;"/>
+                            </div>
+                            <div class="panel-body">
+                                <input type="password" name="password" onclick="cleart('tishi')" id="password"
+                                       class="form-control" placeholder="密码"
+                                       style="width:260px;line-height:30px;height:30px;"/>
+
+                            </div>
+
+                        </div>
+                        <div class="panel-footer">
+                            <div class="container" style="width:100%;text-align:center;">
+                                <button type="button" onClick="login();" class="btn btn-success">登 录</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 column">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-4 column">
+        </div>
+        <div class="col-md-4 column">
+            <div class="alert alert-warning alert-dismissable    " id="tishibox" role="alert" style="display:none;">
+                <button type="button" class="close" onclick="$('#tishibox').hide();" aria-hidden="true">×</button>
+                <h4>
+
+                </h4> <strong>提示!</strong>
+                <span id="tishi"></span>
+            </div>
+        </div>
+        <div class="col-md-4 column">
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+
+    //开始登录
+    function login() {
+        var username = "";
+        username = document.getElementById('username').value;
+        var password = "";
+        password = document.getElementById('password').value;
+
+        $('#tishibox').hide();
+        if (username == "") {
+
+
+            document.getElementById('tishi').innerHTML = "<div  class=tishi>请输入用户名！</div>";
+            $('#tishibox').show();
+
+            return false;
+        }
+        if (password == "") {
+            document.getElementById('tishi').innerHTML = "<div  class=tishi>请输入密码！</div>";
+            $('#tishibox').show();
+
+            return false;
+
+        }
+
+
+        //登录
+
+
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            data: {username: username, password: password},
+            url: "/useradmin/UseradminLogin",
+            success: function (data) {
+                if (data.msg == '666666') {
+                    document.getElementById('tishi').innerHTML = "<div  class=tishi>登录成功！！</div>";
+                    $('#tishibox').show();
+                    window.location.href = "/static/web/useradmin/manage.html"
+                } else {
+
+                    document.getElementById('tishi').innerHTML = "<div  class=tishi>用户名或密码错误！！</div>";
+                    $('#tishibox').show();
+
+                }
+            },
+            error: function (msg) {
+                document.getElementById('tishi').innerHTML = "<div  class=tishi>用户名或密码错误！！</div>";
+                $('#tishibox').show();
+
+            }
+        });
+
+
+    }
+
+    function cleart(tishi) {
+        $('#tishibox').hide();
+
+    }
+
+
+</script>
+
+
+</body>
+</html>
+ 
+ 
+ 
+ 
+
+

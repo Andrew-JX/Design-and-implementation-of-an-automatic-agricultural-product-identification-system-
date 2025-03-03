@@ -1,0 +1,365 @@
+<!doctype html>
+<html>
+<head>
+    <title> 用户  </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" /><meta name="full-screen" content="true" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="360-fullscreen" content="true" />
+    <meta HTTP-EQUIV="pragma" content="no-cache" />
+    <meta HTTP-EQUIV="Cache-Control" content="no-store, must-revalidate" />
+    <meta HTTP-EQUIV="expires" content="Wed, 26 Feb 1997 08:21:57 GMT" />
+    <meta HTTP-EQUIV="expires" content="0" />
+    <link href=/static/vue/css/vuecss.css rel=stylesheet>
+    <script src="/static/vue/js/vue.js"></script>
+    <script src="/static/element-ui/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/sel/js/codejs.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="../../function.js"></script>
+      <link rel="stylesheet" type="text/css" href="../../css.css">
+
+</head>
+<body>
+<div id="app">
+
+   <div style="padding:8px;">
+        <div style="padding-left:0px;font-size:18px;font-weight:bold;line-height:38px;padding-top:8px;">
+            <span style="float:right;">  <el-button round  @click="goblack()">返回</el-button>&nbsp;&nbsp;</span>
+
+            <br/>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div style="line-height:50px;font-size:28px;color:red;">
+                    <br/>
+                    用户
+                    <br/>
+                </div>
+
+                    <div class="forminputbg  col-md-6 column"  >
+                        <el-form  ref="add_form" :rules="add_rules" :model="add_form" label-width="125px" >
+
+
+
+                            <el-form-item label="用户名" prop="username">
+<el-input v-model="add_form.username"></el-input> 
+  </el-form-item>
+
+<el-form-item label="密码" prop="password">
+<el-input  show-password v-model="add_form.password"></el-input> 
+  </el-form-item>
+
+<el-form-item label="姓名" prop="cname">
+<el-input v-model="add_form.cname"></el-input> 
+  </el-form-item>
+
+<el-form-item label="性别" prop="sex">
+  <el-select filterable  v-model="add_form.sex" placeholder="请选择">
+ <el-option   v-for="item in sex_options"
+:key="item.value"
+  :label="item.label"
+:value="item.value">
+   </el-option>
+  </el-select>
+  </el-form-item>
+
+<el-form-item label="手机" prop="tel">
+<el-input v-model="add_form.tel"></el-input> 
+  </el-form-item>
+
+<el-form-item label="邮箱" prop="email">
+<el-input v-model="add_form.email"></el-input> 
+  </el-form-item>
+
+
+
+
+                            <el-form-item>
+                                <el-button type="primary"   :loading="loadingbut"  @click="goAdd('add_form')">提交</el-button>
+                            </el-form-item>
+                        </el-form>
+                        <br/>	 <br/>
+                    </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+</div>
+<script>
+    var ubiao="userlist";
+    var data={
+        loadingbut:false,
+        userid:'',
+        userinfo:{},
+
+        add_form: {
+
+            id: '',  //编号  
+username: '',  //用户名  
+password: '',  //密码  
+cname: '',  //姓名  
+sex: '',  //性别  
+tel: '',  //手机  
+email: '',  //邮箱  
+
+
+        },
+        add_rules: {
+            username:[
+{ required: true, message: '请输入用户名', trigger: 'blur' },
+ ],
+
+password:[
+{ required: true, message: '请输入密码', trigger: 'blur' },
+ ],
+
+cname:[
+{ required: true, message: '请输入姓名', trigger: 'blur' },
+ ],
+
+sex:[
+{ required: true, message: '请输入性别', trigger: 'blur' },
+ ],
+
+tel:[
+{ required: true, message: '请输入手机', trigger: 'blur' },
+{ min: 11, max: 11, message: '请输入11位的手机号', trigger: 'blur' },
+ { pattern:/^(1[35784]\d{9})$/, message: "请输入合法手机号", trigger: "blur" },
+ ],
+
+email:[
+{ required: true, message: '请输入邮箱', trigger: 'blur' },
+  { pattern:/^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g, message: "请输入正确的邮箱", trigger: "blur"},
+ ],
+
+
+
+        },
+
+
+          
+
+  
+
+  
+
+sex_options:[
+
+{value:'男',label:'男'},
+
+{value:'女',label:'女'},
+],
+  
+
+  
+
+  
+
+
+
+
+
+        }
+//-------------
+
+
+
+
+
+        var  goAdd=function(formName)
+        {
+
+
+            var self = this;
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    self.loadingbut=true;
+                    // var wcode=encodeURIComponent(self.modeexcode_form.memo);
+                    var body="1";
+
+                    for(var key in this.add_form){
+                        if(key!="id") {
+                            body = body + "&" + key + "=" + zma(this.add_form[key]);
+                        }
+                    }
+                    var url="/"+ubiao+"/add"+ubiao[0].toUpperCase()+ubiao.substr(1)+"Submit";  //apiurl
+                    fetch(url, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+
+                        body: body
+                        ,
+                    }) .then(function(response) {
+                        return response.json()
+                    }).then(function(json) {
+
+                        if(json.msg=="666666")
+                        {
+                            self.$message({
+                                type: 'success',
+                                message: '成功!',
+                            });
+
+
+
+                            setTimeout(function(){location="./list.html";},2000);
+
+                        }
+                        else
+                        {
+                            self.$message({
+                                type: 'warning',
+                                message: '错误!',
+                            });
+                            self.loadingbut=false;
+
+
+                        }
+
+                    }).catch(function(ex) {  console.log('error submit!!');   })
+                    //-----------------------------
+
+                } else {
+                    //   console.log('error submit!!');
+                    return false;
+        }
+
+
+        });
+
+
+
+
+        }
+            //--------- add end----------
+
+                  
+  
+  
+  
+  
+  
+  
+
+                
+
+
+
+
+
+    var goblack=function()
+    {
+        window.history.back();
+    }
+
+        //得到用户
+    var   getUserLoginInfo=function()
+    {
+        var self = this;
+        var url="/"+userinfobiao+"/"+userinfobiao[0].toUpperCase()+userinfobiao.substr(1)+"GetLogin";  //apiurl
+        $.ajax({
+            url: url,
+            data: null,
+            type: "Post",
+            dataType: "json",
+            success: function(json) {
+                if(json.msg=="666666")
+                {
+                    console.log(json);
+                    self.userid=json.enlist.id;
+                    self.userinfo=json.enlist;
+
+
+                    
+                              
+  
+  
+  
+  
+  
+  
+
+
+                }
+                else{
+                   top.location="../../login.html?gob=1";
+                }
+            }
+        });
+    }
+
+    //---------信息 end--------------------------------------------------------------------------------
+
+
+
+
+
+    var vm = new Vue({
+        el: "#app",
+        data:data,
+        methods:
+        {
+
+            //当前用户
+            getUserLoginInfo:getUserLoginInfo,
+
+            goblack:goblack,
+  
+            goAdd:goAdd,
+                
+
+                        
+
+                          
+  
+  
+  
+  
+  
+  
+
+
+
+        },
+
+
+        created()
+        {
+            this.getUserLoginInfo();
+
+            var doc = document.documentElement;
+            this.table_height = doc.scrollHeight-128;
+
+        }
+    });
+
+
+</script>
+</body>
+</html>
+
+
+
+

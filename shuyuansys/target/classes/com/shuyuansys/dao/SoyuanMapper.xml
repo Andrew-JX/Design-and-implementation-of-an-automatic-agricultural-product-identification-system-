@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shuyuansys.dao.SoyuanMapper">
+    <resultMap id="BaseResultMap" type="com.shuyuansys.po.Soyuan">
+        <!--
+          WARNING - @mbggenerated
+            字段
+        -->
+
+        <result property="id" column="id"/>
+        <result property="nong" column="nong"/>
+        <result property="picurl" column="picurl"/>
+        <result property="bo" column="bo"/>
+        <result property="chetime" column="chetime"/>
+        <result property="shi" column="shi"/>
+        <result property="sheng" column="sheng"/>
+        <result property="shou" column="shou"/>
+        <result property="yun" column="yun"/>
+        <result property="er" column="er"/>
+        <result property="uptime" column="uptime"/>
+        <result property="bh" column="bh"/>
+
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+          WARNING - @mbggenerated
+
+        -->
+        id,nong,picurl,bo,chetime,shi,sheng,shou,yun,er,uptime,bh
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--soyuan
+          WARNING - @mbggenerated
+        查询，有视图就用视图
+        -->
+        select
+        *
+        from soyuan
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+         删除
+        -->
+        delete from soyuan
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.shuyuansys.po.Soyuan">
+        <!--
+            添加全字段
+        -->
+        insert into soyuan (id,nong,picurl,bo,chetime,shi,sheng,shou,yun,er,uptime,bh)
+        values
+        (#{id ,jdbcType=INTEGER},#{nong ,jdbcType=VARCHAR},#{picurl ,jdbcType=LONGVARCHAR},#{bo ,jdbcType=LONGVARCHAR},#{chetime ,jdbcType=VARCHAR},#{shi ,jdbcType=LONGVARCHAR},#{sheng ,jdbcType=LONGVARCHAR},#{shou ,jdbcType=LONGVARCHAR},#{yun ,jdbcType=LONGVARCHAR},#{er ,jdbcType=LONGVARCHAR},#{uptime ,jdbcType=VARCHAR},#{bh ,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.shuyuansys.po.Soyuan">
+        <!--
+          WARNING - @mbggenerated
+             添加不为空的字段
+        -->
+        insert into soyuan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="nong != null">
+                nong,
+            </if>
+            <if test="picurl != null">
+                picurl,
+            </if>
+            <if test="bo != null">
+                bo,
+            </if>
+            <if test="chetime != null">
+                chetime,
+            </if>
+            <if test="shi != null">
+                shi,
+            </if>
+            <if test="sheng != null">
+                sheng,
+            </if>
+            <if test="shou != null">
+                shou,
+            </if>
+            <if test="yun != null">
+                yun,
+            </if>
+            <if test="er != null">
+                er,
+            </if>
+            <if test="uptime != null">
+                uptime,
+            </if>
+            <if test="bh != null">
+                bh,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id ,jdbcType=INTEGER},
+            </if>
+            <if test="nong != null">
+                #{nong ,jdbcType=VARCHAR},
+            </if>
+            <if test="picurl != null">
+                #{picurl ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="bo != null">
+                #{bo ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="chetime != null">
+                #{chetime ,jdbcType=VARCHAR},
+            </if>
+            <if test="shi != null">
+                #{shi ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="sheng != null">
+                #{sheng ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="shou != null">
+                #{shou ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="yun != null">
+                #{yun ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="er != null">
+                #{er ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="uptime != null">
+                #{uptime ,jdbcType=VARCHAR},
+            </if>
+            <if test="bh != null">
+                #{bh ,jdbcType=VARCHAR},
+            </if>
+
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.shuyuansys.po.Soyuan">
+        <!--
+        修改不为空的字段
+        -->
+        update soyuan
+        <set>
+            <if test="nong != null">
+                nong = #{nong ,jdbcType=VARCHAR},
+            </if>
+            <if test="picurl != null">
+                picurl = #{picurl ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="bo != null">
+                bo = #{bo ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="chetime != null">
+                chetime = #{chetime ,jdbcType=VARCHAR},
+            </if>
+            <if test="shi != null">
+                shi = #{shi ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="sheng != null">
+                sheng = #{sheng ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="shou != null">
+                shou = #{shou ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="yun != null">
+                yun = #{yun ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="er != null">
+                er = #{er ,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="uptime != null">
+                uptime = #{uptime ,jdbcType=VARCHAR},
+            </if>
+            <if test="bh != null">
+                bh = #{bh ,jdbcType=VARCHAR},
+            </if>
+
+
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.shuyuansys.po.Soyuan">
+        <!--
+         修改全部字段
+        -->
+        update soyuan
+        set
+
+        nong = #{nong ,jdbcType=VARCHAR},
+        picurl = #{picurl ,jdbcType=LONGVARCHAR},
+        bo = #{bo ,jdbcType=LONGVARCHAR},
+        chetime = #{chetime ,jdbcType=VARCHAR},
+        shi = #{shi ,jdbcType=LONGVARCHAR},
+        sheng = #{sheng ,jdbcType=LONGVARCHAR},
+        shou = #{shou ,jdbcType=LONGVARCHAR},
+        yun = #{yun ,jdbcType=LONGVARCHAR},
+        er = #{er ,jdbcType=LONGVARCHAR},
+        uptime = #{uptime ,jdbcType=VARCHAR},
+        bh = #{bh ,jdbcType=VARCHAR}
+
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="querySoyuanInfoAll" parameterType="Map" resultType="com.shuyuansys.po.Soyuan">
+        SELECT * from soyuan
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+        order by ${orderby}
+    </select>
+
+
+    <select id="topSoyuanNumList" parameterType="Map" resultType="com.shuyuansys.po.Soyuan">
+        SELECT * from soyuan
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+
+        order by ${orderby}
+
+        <if test=" limit!=null and limit>0">
+            limit ${limit}
+        </if>
+
+    </select>
+
+
+    <select id="topSoyuanNumListInTable" parameterType="Map" resultType="com.shuyuansys.po.Soyuan">
+        SELECT * from soyuan
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+
+        order by ${orderby}
+
+        <if test=" limit!=null and limit>0">
+            limit ${limit}
+        </if>
+
+    </select>
+
+
+</mapper>

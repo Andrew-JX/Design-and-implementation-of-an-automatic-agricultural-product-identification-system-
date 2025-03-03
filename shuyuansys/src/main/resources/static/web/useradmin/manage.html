@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>
+管理员管理界面
+</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<meta name="full-screen" content="true" />
+<meta name="screen-orientation" content="portrait" />
+<meta name="x5-fullscreen" content="true" />
+<meta name="360-fullscreen" content="true" />
+<meta HTTP-EQUIV="pragma" content="no-cache" />
+<meta HTTP-EQUIV="Cache-Control" content="no-store, must-revalidate" />
+<meta HTTP-EQUIV="expires" content="Wed, 26 Feb 1997 08:21:57 GMT" />
+<meta HTTP-EQUIV="expires" content="0" />
+<link rel="stylesheet" type="text/css" href="/static/animate/animate.css">
+<link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+<script src="/static/jquery/jquery-1.8.3.min.js"></script>
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="./css.css">
+  <style>
+  	 	*{padding:0px; margin:0px;}
+        body {background:#fff;height:100%;width:100%;}
+		.container{width:100%;}
+		.glyphicon {
+            color: white;
+         
+        }
+		.menu{
+			width:100%;
+			 
+			 margin-top:30px;
+			}
+		.menu ul{
+			
+			}
+		.menu li{
+			line-height:45px;
+			padding-left:20px;
+			border-bottom:1px  #333 dashed
+			
+			}
+		.menu li:hover{
+			
+			 background:#119688;	padding-left:20px;
+			
+			}
+			.menu li a{color:#ccc;font-size:18px;}
+	 		.menu li a:hover{color:#eee;font-size:18px;}
+
+		.menu li.active {
+			background-color: #119688;
+		}
+ </style>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+ <body>
+ 
+ <div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column" style="height:60px;width:100%; background:#313A43">
+			<div class="row clearfix">
+				<div class="col-md-4 column">
+                <div style="line-height:60px;font-size:18px;">
+                <span style="font-size:16px;color:#fff;">管理员端</span> 
+				</div>
+                
+                </div>
+				<div class="col-md-4 column">
+				</div>
+				<div class="col-md-4 column">
+                  
+     
+     
+     <div style="float:right;line-height:60px;margin-right:10px;">
+     
+     
+<div class="dropdown" >
+	<button type="button" class="btn dropdown-toggle" id="dropdownMenu1" 
+			data-toggle="dropdown"  style="background:#313A43;color:#fff;">
+		<span id="username"></span>
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="background:#333;">
+		<li role="presentation"  >
+			<a role="menuitem" tabindex="-1" href="chagepass.html" target="mainadmin"  style="color:#ccc;">修改密码</a>
+		</li>
+		<li role="presentation">
+			<a role="menuitem" tabindex="-1" href="javascript:void(0)" style="color:#ccc;" onclick="logout()">退出</a>
+		</li>
+		 
+	</ul>
+</div>
+
+     
+  </div>   
+     
+     
+     
+     
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row clearfix">
+    
+    
+		<div class="col-md-2 column" style="background:#353D48;height:800px;  ">
+
+        
+    
+    <div  class="menu" >
+        <ul>
+
+			<li><a href="views/wenfei/list.html" target="mainadmin">文章分类</a></li>
+			<li><a href="views/article/list.html" target="mainadmin">文章</a></li>
+
+
+
+
+
+<li><a href="views/soyuan/list.html" target="mainadmin">溯源信息</a></li>
+
+			<li><a href="views/jilv/list.html" target="mainadmin">识别记录</a></li>
+
+
+<li><a href="views/liuyan/list.html" target="mainadmin">留言</a></li>
+
+			<li><a href="views/useradmin/list.html" target="mainadmin">管理员</a></li>
+			<li><a href="views/userlist/list.html" target="mainadmin">用户</a></li>
+            <li>
+                <a href="javascript:void(0)"   onclick="logout()">退出登录</a>
+            </li>
+
+
+
+
+
+        </ul>
+
+
+
+
+   
+</div>
+
+
+
+
+
+
+<!-- -->
+
+
+
+
+
+
+
+
+
+
+        
+        </div>
+         
+		<div class="col-md-10 column">
+        
+        
+                  <div style="background:#fff;width:100%;height:600px;float:left;padding-top:10px;">
+                    
+                    
+                     
+    <iframe name="mainadmin" scrolling="auto"  height="710" width=100% border="0" frameborder="0" src="./wel.html"> </iframe>
+
+
+                    
+                    
+                    
+                    </div>
+        
+        
+        
+		</div>
+        
+	</div>
+    
+    
+</div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ <script>
+ iflogin();
+function iflogin()
+{
+ $.ajax({
+			type: "post",
+			dataType: "json",
+ 			data:null,
+		    url: "/useradmin/UseradminGetLogin",
+			success: function(data){
+				if(data.msg=='000001')
+				{
+			       window.location.href="/static/web/useradmin/login.html"
+				}
+				else
+				{
+				document.getElementById('username').innerHTML= data.enlist.username
+
+
+				}
+			},
+			error: function(msg){
+
+
+			}
+		});
+
+
+  }
+  function logout()
+  {
+
+$.ajax({
+			type: "post",
+			dataType: "json",
+ 			data:null,
+		    url: "/useradmin/UseradminLogout",
+			success: function(data){
+
+			       window.location.href="/static/web/useradmin/login.html"
+
+			},
+			error: function(msg){
+ 					//window.location.href="/static/web/useradmin/login.html"
+
+			}
+		});
+
+
+
+  }
+
+	 var menuItems = document.querySelectorAll('.menu li');
+	 menuItems.forEach(function (menuItem) {
+		 menuItem.addEventListener('click', function () {
+			 menuItems.forEach(function (item) {
+				 item.classList.remove('active');
+			 });
+			 this.classList.add('active');
+		 });
+	 });
+
+ </script>
+ 
+ 
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <title>管理员修改密码</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" /><meta name="full-screen" content="true" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="360-fullscreen" content="true" />
+    <meta HTTP-EQUIV="pragma" content="no-cache" />
+    <meta HTTP-EQUIV="Cache-Control" content="no-store, must-revalidate" />
+    <meta HTTP-EQUIV="expires" content="Wed, 26 Feb 1997 08:21:57 GMT" />
+    <meta HTTP-EQUIV="expires" content="0" />
+    <link href=/static/vue/css/vuecss.css rel=stylesheet>
+    <script src="/static/vue/js/vue.js"></script>
+    <script src="/static/element-ui/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/sel/js/codejs.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="./function.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css.css">
+
+    <style>
+        .sstext{border:1px solid #ccc;}
+    </style>
+</head>
+<body style="background:   #E9ECD9 center no-repeat;">
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <div style="line-height:50px;font-size:28px;color:red;">
+                <br/>
+                修改密码
+                <br/>
+            </div>
+            <div id="app">
+                <div class="forminputbg  col-md-6 column"  >
+                    <el-form  ref="table_form" :rules="table_rules" :model="table_form" label-width="100px" >
+
+                        <el-form-item label="旧密码" prop="oldpassword">
+                            <el-input  show-password v-model="table_form.oldpassword"></el-input>
+                        </el-form-item>
+                        <el-form-item label="新密码" prop="password">
+                            <el-input  show-password v-model="table_form.password"></el-input>
+                        </el-form-item>
+                        <el-form-item label="确认新密码" prop="qpassword">
+                            <el-input  show-password v-model="table_form.qpassword"></el-input>
+                        </el-form-item>
+
+                        <el-form-item>
+                            <el-button type="primary"    @click="table_chagepass('table_form')">提交</el-button>
+                        </el-form-item>
+                    </el-form>
+                    <br/>	 <br/>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var ubiao="useradmin";
+    var data={
+
+        table_form: {
+            oldpassword:'',
+            password:'',
+            qpassword:'',
+
+        },
+        table_rules: {
+            oldpassword:[
+                { required: true, message: '请输入旧密码', trigger: 'blur' },
+                { min: 4, max: 25, message: '长度在4位以上', trigger: 'blur' }
+            ],
+            password:[
+                { required: true, message: '请输入新密码', trigger: 'blur' },
+                { min: 4, max: 25, message: '长度在4位以上', trigger: 'blur' }
+            ],
+            qpassword:[
+                { required: true, message: '请输入确认新密码', trigger: 'blur' },
+                { min: 4, max: 25, message: '长度在4位以上', trigger: 'blur' }
+            ],
+
+        },
+
+
+        useradmin_form: {
+
+        id: '',  //编号  
+username: '',  //用户名  
+password: '',  //密码  
+name1: '',  //姓名  
+tel: '',  //手机  
+
+
+    },
+
+    data_info: [],
+
+
+    }
+    ///--------------------------
+
+
+
+    //信息---------------------------------------------------------
+    var   getInfo=function()
+    {
+        //先把本地对象缓存下来
+        var self = this;
+        //-----------------------------
+        self.data_info.splice(0, self.data_info.length);//清空数组
+        var url="/"+ubiao+"/"+ubiao[0].toUpperCase()+ubiao.substr(1)+"GetLogin";//apiurl
+        $.ajax({
+            url: url,
+            data: null,
+            type: "POST",
+            dataType: "json",
+            success: function(json) {
+                if(json.msg=="666666")
+                {
+
+
+                    self.data_info.push(json.enlist);
+
+                    for(var key in self.useradmin_form){
+                    self.useradmin_form[key]= self.data_info[0][key] ;
+                }
+
+
+
+                }
+                else{
+                    top.location="login.html?gob=1";
+                }
+            }
+        });
+        //-----------------------------
+    }
+    //---------信息 end--------------------------------------------------------------------------------
+
+
+    //////===============================================
+
+
+
+    var  table_chagepass=function(formName)
+    {
+
+        var self = this;
+        this.$refs[formName].validate((valid) => {
+            if (valid) {
+
+                if(self.useradmin_form.password!=self.table_form.oldpassword )
+                {
+                    self.$message({
+                        type: 'warning',
+                        message: '旧密码输入不正确!',
+                    });
+                    return false;
+                }
+            else if(self.table_form.password!=self.table_form.qpassword)
+                {
+                    self.$message({
+                        type: 'warning',
+                        message: '确认密码与新密码输入不相同!',
+                    });
+                    return false;
+                }
+
+
+                else{
+
+                    // var wcode=encodeURIComponent(self.modeexcode_form.memo);
+                    var body="1";
+                    self.table_form.password=self.table_form.password;
+                    for(var key in this.table_form){
+
+                        body = body + "&" + key + "=" + zma(this.table_form[key]);
+
+                    }
+                    var url="/"+ubiao+"/"+ubiao[0].toUpperCase()+ubiao.substr(1)+"ChagePass";  //apiurl
+
+
+                    fetch(url, {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+
+                        body: body
+                        ,
+                    }) .then(function(response) {
+                        return response.json()
+                    }).then(function(json) {
+
+                        if(json.msg=="666666")
+                        {
+                            self.$message({
+                                type: 'success',
+                                message: '修改成功,请重新登录!',
+                            });
+                            setTimeout(function(){top.location="login.html";},2000);
+
+                        }
+                        else
+                        {
+                            self.$message({
+                                type: 'warning',
+                                message: '失败!',
+                            });
+                        }
+
+
+                    }).catch(function(ex) {  console.log('error submit!!');   })
+                    //-----------------------------
+                }//end if 旧密码比对
+            } else {
+                //   console.log('error submit!!');
+                return false;
+
+            }//end if valid
+
+        });
+    }
+    //--------- add end----------
+
+
+
+
+    var vm = new Vue({
+        el: "#app",
+        data:data,
+
+
+        methods:
+            {
+                getInfo:getInfo,
+                table_chagepass:table_chagepass,
+
+
+            },
+
+
+        created: function ()
+        {
+
+            this.getInfo();
+
+        }
+
+
+
+    });
+
+
+
+</script>
+
+
+</body>
+</html>
+
+
+
+
+    

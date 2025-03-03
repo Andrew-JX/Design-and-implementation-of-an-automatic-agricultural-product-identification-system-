@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shuyuansys.dao.UseradminMapper">
+    <resultMap id="BaseResultMap" type="com.shuyuansys.po.Useradmin">
+        <!--
+          WARNING - @mbggenerated
+            字段
+        -->
+
+         <result property="id" column="id" />
+ <result property="username" column="username" />
+ <result property="password" column="password" />
+ <result property="name1" column="name1" />
+ <result property="tel" column="tel" />
+
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+          WARNING - @mbggenerated
+
+        -->
+        id,username,password,name1,tel
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--useradmin
+          WARNING - @mbggenerated
+        查询，有视图就用视图
+        -->
+        select
+        *
+        from useradmin
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+         删除
+        -->
+        delete from useradmin
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.shuyuansys.po.Useradmin">
+        <!--
+            添加全字段
+        -->
+        insert into useradmin (id,username,password,name1,tel)
+        values (#{id ,jdbcType=INTEGER},#{username ,jdbcType=VARCHAR},#{password ,jdbcType=VARCHAR},#{name1 ,jdbcType=VARCHAR},#{tel ,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.shuyuansys.po.Useradmin">
+        <!--
+          WARNING - @mbggenerated
+             添加不为空的字段
+        -->
+        insert into useradmin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+             <if test="id != null">
+id,
+        </if>
+ <if test="username != null">
+username,
+        </if>
+ <if test="password != null">
+password,
+        </if>
+ <if test="name1 != null">
+name1,
+        </if>
+ <if test="tel != null">
+tel,
+        </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+             <if test="id != null">
+#{id ,jdbcType=INTEGER},
+ </if>
+ <if test="username != null">
+#{username ,jdbcType=VARCHAR},
+ </if>
+ <if test="password != null">
+#{password ,jdbcType=VARCHAR},
+ </if>
+ <if test="name1 != null">
+#{name1 ,jdbcType=VARCHAR},
+ </if>
+ <if test="tel != null">
+#{tel ,jdbcType=VARCHAR},
+ </if>
+
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.shuyuansys.po.Useradmin">
+        <!--
+        修改不为空的字段
+        -->
+        update useradmin
+        <set>
+             <if test="username != null">
+username = #{username ,jdbcType=VARCHAR},
+ </if>
+ <if test="password != null">
+password = #{password ,jdbcType=VARCHAR},
+ </if>
+ <if test="name1 != null">
+name1 = #{name1 ,jdbcType=VARCHAR},
+ </if>
+ <if test="tel != null">
+tel = #{tel ,jdbcType=VARCHAR},
+ </if>
+
+
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.shuyuansys.po.Useradmin">
+        <!--
+         修改全部字段
+        -->
+        update useradmin
+        set
+
+      username = #{username ,jdbcType=VARCHAR},
+password = #{password ,jdbcType=VARCHAR},
+name1 = #{name1 ,jdbcType=VARCHAR},
+tel = #{tel ,jdbcType=VARCHAR}
+
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="queryUseradminInfoAll" parameterType="Map" resultType="com.shuyuansys.po.Useradmin">
+        SELECT * from useradmin
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+        order by  ${orderby}
+    </select>
+
+
+    <select id="topUseradminNumList"  parameterType="Map"  resultType="com.shuyuansys.po.Useradmin">
+        SELECT * from useradmin
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+
+        order by  ${orderby}
+
+        <if test=" limit!=null and limit>0">
+            limit ${limit}
+        </if>
+
+    </select>
+
+
+
+
+
+
+
+    <select id="topUseradminNumListInTable"  parameterType="Map"  resultType="com.shuyuansys.po.Useradmin">
+        SELECT * from useradmin
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+
+        order by  ${orderby}
+
+        <if test=" limit!=null and limit>0">
+            limit ${limit}
+        </if>
+
+    </select>
+
+
+
+
+</mapper>

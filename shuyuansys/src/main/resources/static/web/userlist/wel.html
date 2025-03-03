@@ -1,0 +1,485 @@
+<!doctype html>
+<html>
+<head>
+    <title>用户信息</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" /><meta name="full-screen" content="true" />
+    <meta name="screen-orientation" content="portrait" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="360-fullscreen" content="true" />
+    <meta HTTP-EQUIV="pragma" content="no-cache" />
+    <meta HTTP-EQUIV="Cache-Control" content="no-store, must-revalidate" />
+    <meta HTTP-EQUIV="expires" content="Wed, 26 Feb 1997 08:21:57 GMT" />
+    <meta HTTP-EQUIV="expires" content="0" />
+    <link href=/static/vue/css/vuecss.css rel=stylesheet>
+    <script src="/static/vue/js/vue.js"></script>
+    <script src="/static/element-ui/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap/css/bootstrap.min.css">
+    <script src="/static/jquery/jquery-1.8.3.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/sel/js/codejs.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="./function.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css.css">
+    <style>
+        .el-carousel__item h3 {
+            color: #356910;
+            font-size: 14px;
+            opacity: 0.75;
+            line-height: 150px;
+            margin: 0;
+        }
+
+        .el-carousel__item:nth-child(2n) {
+            background-color: #de7017;
+        }
+
+        .el-carousel__item:nth-child(2n+1) {
+            background-color: #d3dce6;
+        }
+        .image {
+
+            width:100px;
+            height:100px;
+            display: block;
+            object-fit: contain;
+            margin:0 auto; text-align:center;
+        }
+        .slide-box{
+            margin-top: 10px;
+            height:55px;
+            display: -webkit-box;
+            overflow-x: scroll;
+            -webkit-overflow-scrolling:touch;
+        }
+        .slide-item{
+            padding:5px 10px;
+            height: 35px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+
+
+
+
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="carousel slide" id="carousel-985413" data-ride="carousel" data-interval="2000">
+                <ol class="carousel-indicators">
+                    <li data-slide-to="0" data-target="#carousel-985413">
+                    </li>
+                    <li data-slide-to="1" data-target="#carousel-985413">
+                    </li>
+                    <li data-slide-to="2" data-target="#carousel-985413">
+                    </li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="item active left">
+                        <img alt="" src="/static/images/1.jpg" />
+                        <div class="carousel-caption">
+                        </div>
+                    </div>
+                    <div class="item next left">
+                        <img alt="" src="/static/images/2.jpg" />
+                        <div class="carousel-caption">
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img alt="" src="/static/images/3.jpg" />
+                        <div class="carousel-caption">
+                        </div>
+                    </div>
+                </div> <a data-slide="prev" href="#carousel-985413" class="left carousel-control"> </a> <a data-slide="next" href="#carousel-985413" class="right carousel-control"> </a>
+            </div>
+
+
+
+
+
+
+
+        </div>
+        <div class="col-md-4 column">
+            <div class="row" id=rediv>
+
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <div class="slide-box">
+        <div class="slide-item">
+            <el-button type="primary" plain  @click="goclass(0)">全部</el-button></div>
+        <div  class="slide-item" v-for="(i, value) in lid_options" :key="value"  >
+
+            <el-button type="primary" plain  @click="goclass(i.value)">	{{i.label}}</el-button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+    <!--list begin -->
+
+    <template>
+        <div class="infinite-list-wrapper" style="overflow:auto">
+            <ul
+                    class="list"
+                    v-infinite-scroll="load"
+                    infinite-scroll-disabled="disabled">
+
+
+                <div class="container">
+                    <div class="row clearfix">
+                        <div class="col-md-12 column">
+                            <ul>
+
+                                <div   v-for="(item, index) in my_dataList" :key="index"  >
+
+                                    <div  style="width:40%;float:left; text-align:center;height:120px;  padding-right:2%;">
+
+                                        <div v-if=(item.picurl!="")>
+                                            <a href="javascript:void(0)" @click=goshow(item,index)>
+                                                <img :src="'/static/upload/'+imgSrc(item.picurl)" class="image"  style="width:120px;height:120px; padding-top:8px;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div  style="width:55%;float:left;	">
+                                        <li style="line-height:30px;height:120px;padding-left:28px;">
+
+                                            <a href="javascript:void(0)" @click=goshow(item,index)>{{item.title}}</a>
+
+
+                                            <br/>{{item.uptime}}
+                                            <div style="float:right;">
+                                                <el-button round  @click="goshow(item,item)">详细</el-button>
+                                            </div>
+                                        </li>
+
+
+                                    </div>
+
+
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+
+
+
+            </ul>
+
+
+
+            <Br/>   <Br/>   <Br/>
+
+            <center>
+                <p v-if="loading">加载中...</p>
+                <p v-if="noMore">没有更多了</p>
+            </center>
+        </div>
+    </template>
+
+
+
+    <!--list end -->
+</div>
+
+
+</div>
+
+
+
+<script>
+
+    var ubiao="article";
+    var waibiao="wenfei";
+    var waifield="cid";
+
+
+
+
+
+    var data={
+        data_info: [],
+
+
+
+
+        my_dataList:[],
+        lid_options:[],
+
+        my_sum_count:0,
+        my_list_page_now:0,//列表当前页数
+        count: 10,
+        loading: false,
+
+        lid:0,
+        id:0,
+
+        ifshow:0,
+
+
+
+
+        kclist:[],
+
+
+
+
+    }
+
+
+    //信息---------------------------------------------------------
+    var   getInfo=function()
+    {
+        //先把本地对象缓存下来
+        var self = this;
+        //-----------------------------
+        self.data_info.splice(0, self.data_info.length);//清空数组
+        var url="/"+userinfobiao+"/"+userinfobiao[0].toUpperCase()+userinfobiao.substr(1)+"GetLogin";//apiurl
+        $.ajax({
+            url: url,
+            data: null,
+            type: "POST",
+            dataType: "json",
+            success: function(json) {
+                if(json.msg=="666666")
+                {
+                    self.data_info.push(json.enlist);
+
+                }
+                else
+                {
+                    top.location="login.html";
+                }
+            }
+        });
+        //-----------------------------
+    }
+    //---------信息 end--------------------------------------------------------------------------------
+    //列表---------------------------------------------------------
+
+    //得到模型列表listapi
+    var getmyDataList=function(page)
+    {
+        //先把本地对象缓存下来
+        var self = this;
+        //-----------------------------
+        self.my_dataList.splice(0, self.my_dataList.length);//清空数组
+        var url="/"+ubiao+"/top"+ubiao[0].toUpperCase()+ubiao.substr(1)+"NumList"
+        var whstr="";
+        var bodystr="";
+        if(self.lid!=0)
+        {
+            // bodystr="num=0&"+waifield+"="+self.lid;
+            bodystr="num=0&whstr= and "+waifield+"="+self.lid;
+
+        }
+        else
+        {
+            bodystr="num=0";
+        }
+
+
+
+
+
+        if(page<=1){page=0;}
+
+
+
+        $.ajax({
+            url: url,
+            data:  bodystr,
+            type: "POST",
+            dataType: "json",
+            success: function(json) {
+                for(i=0;i<json.enlist.length;i++)
+                {
+                    self.my_dataList.push(json.enlist[i]);
+                }
+                self.my_sum_count=json.enlist.length;
+
+                console.log( self.my_dataList);
+
+            }
+        });
+        //-----------------------------
+    }
+    //---------列表 end--------------------------------------------------------------------------------
+
+    var goclass=function(id)
+    {
+
+        this.lid=id;
+        console.log("fid="+id);
+        this.getmyDataList(0);
+    }
+
+    var goblack=function()
+    {
+
+        location="./wel.html";
+
+    }
+    var goshow=function(item,index)
+    {
+
+        location="views/"+ubiao+"/show.html?id="+item.id;
+    }
+
+
+    var   getFenleiInfo=function()
+    {
+        var self = this;
+
+        var url="/"+waibiao+"/top"+waibiao[0].toUpperCase()+waibiao.substr(1)+"NumList"
+        $.ajax({
+            url: url,
+            data: null,
+            type: "GET",
+            dataType: "json",
+            success: function(json) {
+                if(json!=null)
+                {
+                    for(var i=0;i<json.enlist.length;i++)
+                    {
+                        var arr={
+                            "value":json.enlist[i].id,
+                            "label":json.enlist[i].fenleiname  //-------------------
+                        }
+                        self.lid_options.push(arr);
+                    }
+                }
+                else{
+                }
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    var vm = new Vue({
+        el: "#app",
+        data:data,
+
+
+
+
+        computed: {
+            noMore () {
+                return this.count >= 10
+            },
+            disabled () {
+                return this.loading || this.noMore
+            }
+        },
+        methods:
+            {
+                getmyDataList:getmyDataList,//显示列表
+
+                imgSrc(item){
+                    //return  '/xueserver/upload/'+item.picurl;
+                },
+
+
+
+                load () {
+                    this.loading = true
+                    setTimeout(() => {
+                        this.count += 2
+                        this.loading = false
+                        this.getmyDataList(this.count)
+                    }, 2000)
+                },
+
+
+                //   this.getmyDataList(this.count);
+
+
+                getFenleiInfo:getFenleiInfo,
+                goclass:goclass,
+                goshow:goshow,
+                goblack:goblack,
+                getInfo:getInfo,
+                imgSrc(url){
+
+                    return  url;
+                },
+            },
+
+
+        created: function ()
+        {
+            this.getFenleiInfo();
+            this.getmyDataList(0);
+            this.getInfo();
+
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+</html>
+
+
+

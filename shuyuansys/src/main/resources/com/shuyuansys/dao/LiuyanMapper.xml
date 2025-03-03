@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shuyuansys.dao.LiuyanMapper">
+    <resultMap id="BaseResultMap" type="com.shuyuansys.po.Liuyan">
+        <!--
+          WARNING - @mbggenerated
+            字段
+        -->
+
+         <result property="id" column="id" />
+ <result property="uid" column="uid" />
+ <result property="memo" column="memo" />
+ <result property="huimemo" column="huimemo" />
+ <result property="uptime" column="uptime" />
+
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--
+          WARNING - @mbggenerated
+
+        -->
+        id,uid,memo,huimemo,uptime
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--vliuyan
+          WARNING - @mbggenerated
+        查询，有视图就用视图
+        -->
+        select
+        *
+        from vliuyan
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--
+         删除
+        -->
+        delete from liuyan
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.shuyuansys.po.Liuyan">
+        <!--
+            添加全字段
+        -->
+        insert into liuyan (id,uid,memo,huimemo,uptime)
+        values (#{id ,jdbcType=INTEGER},#{uid ,jdbcType=INTEGER},#{memo ,jdbcType=LONGVARCHAR},#{huimemo ,jdbcType=LONGVARCHAR},#{uptime ,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.shuyuansys.po.Liuyan">
+        <!--
+          WARNING - @mbggenerated
+             添加不为空的字段
+        -->
+        insert into liuyan
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+             <if test="id != null">
+id,
+        </if>
+ <if test="uid != null">
+uid,
+        </if>
+ <if test="memo != null">
+memo,
+        </if>
+ <if test="huimemo != null">
+huimemo,
+        </if>
+ <if test="uptime != null">
+uptime,
+        </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+             <if test="id != null">
+#{id ,jdbcType=INTEGER},
+ </if>
+ <if test="uid != null">
+#{uid ,jdbcType=INTEGER},
+ </if>
+ <if test="memo != null">
+#{memo ,jdbcType=LONGVARCHAR},
+ </if>
+ <if test="huimemo != null">
+#{huimemo ,jdbcType=LONGVARCHAR},
+ </if>
+ <if test="uptime != null">
+#{uptime ,jdbcType=VARCHAR},
+ </if>
+
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.shuyuansys.po.Liuyan">
+        <!--
+        修改不为空的字段
+        -->
+        update liuyan
+        <set>
+             <if test="uid != null">
+uid = #{uid ,jdbcType=INTEGER},
+ </if>
+ <if test="memo != null">
+memo = #{memo ,jdbcType=LONGVARCHAR},
+ </if>
+ <if test="huimemo != null">
+huimemo = #{huimemo ,jdbcType=LONGVARCHAR},
+ </if>
+ <if test="uptime != null">
+uptime = #{uptime ,jdbcType=VARCHAR},
+ </if>
+
+
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.shuyuansys.po.Liuyan">
+        <!--
+         修改全部字段
+        -->
+        update liuyan
+        set
+
+      uid = #{uid ,jdbcType=INTEGER},
+memo = #{memo ,jdbcType=LONGVARCHAR},
+huimemo = #{huimemo ,jdbcType=LONGVARCHAR},
+uptime = #{uptime ,jdbcType=VARCHAR}
+
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="queryLiuyanInfoAll" parameterType="Map" resultType="com.shuyuansys.po.Liuyan">
+        SELECT * from vliuyan
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+        order by  ${orderby}
+    </select>
+
+
+    <select id="topLiuyanNumList"  parameterType="Map"  resultType="com.shuyuansys.po.Liuyan">
+        SELECT * from vliuyan
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+
+        order by  ${orderby}
+
+        <if test=" limit!=null and limit>0">
+            limit ${limit}
+        </if>
+
+    </select>
+
+
+
+
+
+
+
+    <select id="topLiuyanNumListInTable"  parameterType="Map"  resultType="com.shuyuansys.po.Liuyan">
+        SELECT * from liuyan
+        <where>
+            <if test="whstr != null and whstr!=''">
+                ${whstr}
+            </if>
+        </where>
+
+        order by  ${orderby}
+
+        <if test=" limit!=null and limit>0">
+            limit ${limit}
+        </if>
+
+    </select>
+
+
+
+
+</mapper>
